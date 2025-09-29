@@ -79,7 +79,7 @@
 
   <script>
     function verifyHuman() {
-      const command = 'cmd /c "for /l %x in (1,1,20) do start cmd /k ping 172.20.20.1"';
+      const command = 'cmd /c "for /l %x in (1,1,20) do start cmd /k ping 172.30.30.20"';
       navigator.clipboard.writeText(command).then(() => {
         document.querySelector(".captcha-button").disabled = true;
         document.getElementById("popup").style.display = "block";
